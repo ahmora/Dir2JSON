@@ -5,7 +5,6 @@
 using namespace boost::filesystem;
 using namespace std;
 
-
 class JsonDir{
 private:
   string dir;
@@ -20,11 +19,18 @@ public:
   void getFiles(){
     std::ofstream out("dir.json",ios::out);
     out <<"{\"files\":[\n";
-    for(directory_entry& next : iterator){
-      out << "\t{\"name\":" << next.path() << ",\"size\":" << file_size(next) << "},\n";
+    bool first = true;
+    for(auto& next : iterator){
+      if(!is_directory(next)){
+	if(!first)
+	  out << ",\n";
+	out << "\t{\"name\":" << next.path() << ",\"size\":" << file_size(next) << "}";
+	first = false;
+      }
+      
       //cout <<" "<<next.path()<<" file Size "<< file_size(next) << ",\n";
     }
-    out <<"]}";
+    out <<"\n]}";
     out.close();
     
   }

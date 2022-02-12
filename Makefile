@@ -1,6 +1,6 @@
 CC = g++
 CFLAGS = -lboost_system -lboost_filesystem
-TARGET = program
+TARGET = listdir
 
 
 compile: src/json.cpp lib/JsonDir.hpp
